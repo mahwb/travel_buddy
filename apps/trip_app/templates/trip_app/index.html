@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'trip_app/style.css' %}">
+    <title>Travel Dashboard</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'login:lo' %}">Logout</a>
+    </nav>
+    <main>
+        <h1>Hello, {{ request.session.first_name }}!</h1>
+        <h3>Your Trip Schedules</h3>
+        <table>
+            <thead>
+                <tr> 
+                    <td>Destination</td>
+                    <td>Travel Start Date</td>
+                    <td>Travel End Date</td>
+                    <td>Plan</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trip in mytrips %}
+                <tr>
+                    <td><a href="{% url 'trip:dest' id=trip.id %}">{{ trip.destination }}</a></td>
+                    <td>{{ trip.date_from|date:"M d Y" }}</td>
+                    <td>{{ trip.date_to|date:"M d Y" }}</td>
+                    <td>{{ trip.description }}</td>
+                </tr>
+                {% endfor %}
+                {% for join in joined %}
+                    <tr>
+                        <td><a href="{% url 'trip:dest' id=join.trip.id %}">{{join.trip.destination}} </a></td>
+                        <td>{{ join.trip.date_from|date:"M d Y" }}</td>
+                        <td>{{ join.trip.date_to|date:"M d Y" }}</td>
+                        <td>{{ join.trip.description }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Other User's Travel Plans</h3>
+        <table>
+            <thead>
+                <tr style="font-weight: bold">
+                    <td>Name</td> 
+                    <td>Destination</td>
+                    <td>Travel Start Date</td>
+                    <td>Travel End Date</td>
+                    <td>Do You Want To Join?</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trip in unjoined %}
+                {% if not trip.user.id == request.session.user_id %}
+                <tr>
+                    <td>{{ trip.user.first_name }} {{ trip.user.last_name }}</td>
+                    <td><a href="{% url 'trip:dest' id=trip.id %}">{{ trip.destination }}</a></td>
+                    <td>{{ trip.date_from|date:"M d Y" }}</td>
+                    <td>{{ trip.date_to|date:"M d Y" }}</td>
+                    <td><a href="{% url 'trip:join' id=trip.id %}">Join</a></td>
+                </tr>
+                {% endif %}                
+                {% endfor %}
+            </tbody>
+        </table>
+        <br><a href="{% url 'trip:add' %}">Add Travel Plan</a>
+    </main>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'login_app/style.css' %}">
+    <title>Welcome</title>
+</head>
+<body>
+    <main>
+        <section>
+            <h2>Register</h2>
+            <form action="{% url 'login:reg' %}" method="POST">
+                {% csrf_token %}
+                <label>First Name: </label><input type="text" name="first_name" placeholder="Enter first name"><br>
+                <label>Last Name: </label><input type="text" name="last_name" placeholder="Enter last name"><br>
+                <label>Email: </label><input type="text" name="email" placeholder="Enter email"><br>
+                <label>Password: </label><input type="password" name="password" placeholder="Enter password"><br>
+                <label>Confirm PW: </label><input type="password" name="confirm" placeholder="Confirm password"><br>
+                <input type="submit" name="submit" value="Register"><br>
+            </form>
+        </section>
+        <section>
+            <h2>Login</h2>
+            <form action="{% url 'login:li' %}" method="POST">
+                {% csrf_token %}
+                <label>Email: </label><input type="text" name="email" placeholder="Enter email"><br>
+                <label>Password: </label><input type="password" name="password" placeholder="Enter password"><br>
+                <input type="submit" name="submit" value="Login"><br>
+            </form>
+        </section>
+        <div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                {% if message.tags == "error" %}
+                <li><span style="color: red">{{ message }}</span></li>
+                {% else %}
+                <li><span style="color: green">{{ message }}</span></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div>
+    </main>
+    
+</body>
+</html>
