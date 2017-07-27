@@ -1,13 +1,54 @@
+body {
+    margin: 0;
+}
 table {
     border-collapse: collapse;
     border: 1px solid black;
 }
-table thead tr {
-    font-weight: bold;
-    border: 1px solid black;
-    background-color: lightgrey;
+    table thead tr {
+        font-weight: bold;
+        border: 1px solid black;
+        background-color: darkslategrey;
+        color: white;
+    }
+    table td {
+        border-right: 1px solid black;
+        padding: 5px 10px;
+    }
+    table tbody tr:nth-child(odd) {
+        background-color: lightgray;
+    }
+nav {
+    background-color: teal;
+    padding: 10px;
+    text-align: right;
+    
 }
-table td {
-    border-right: 1px solid black;
-    padding: 5px 10px;
+    nav a {
+        color: white;
+        padding: 0 10px;
+        text-decoration: none;
+        
+    }
+    nav a:hover {
+        text-decoration: underline;
+    }
+main {
+    margin: 10px;
+    width: fit-content;
+}
+    main a {
+        text-decoration: none;
+        color: teal;
+    }
+    main a:hover {
+        text-decoration: underline;
+        color: teal;
+    }
+    main p {
+        margin-left: 15px;
+    }
+form {
+    width: fit-content;
+    text-align: right;
 }

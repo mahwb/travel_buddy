@@ -7,7 +7,10 @@ from .models import Users
 def index(request):
     if "logged_in" not in request.session:
         request.session["logged_in"] = False
-    return render(request, "login_app/index.html")
+    if request.session["logged_in"]:
+        return redirect("trip:idx")
+    else:
+        return render(request, "login_app/index.html")
 
 def register(request):
     if request.POST:
